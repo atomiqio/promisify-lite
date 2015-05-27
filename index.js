@@ -14,29 +14,35 @@ const promisifiableTypes = new Set(['function', 'object']);
  * have been analyzed and converted.
  *
  * @param {*} thing the function or object to analyze and potentially (recursively) promisify
- * @param {Set} memo for caching promisified objects
+ * @param {Set} cache for caching promisified objects
  * @return {*} promisified function or object.
  */
-function promisify(thing, memo) {
+function promisify(thing, cache, path) {
   debug('promisifying => ', thing);
 
-  memo = memo || new Set();
+  cache = cache || new Set();
+  path = path || '';
 
-  // thing has already been promisified and memoized
-  if (memo.has(thing)) {
-    debug('returning memoized promise');
+  debug(path);
+
+  // thing has already been promisified and cached
+  if (cache.has(thing)) {
+    debug('returning cached promise');
     return thing;
   }
 
   // only promisify functions or the member functions of objects, just return anything else
   let type = typeof thing;
-  if (!promisifiableTypes.has(type)) {
+  if (!thing || !promisifiableTypes.has(type)) {
     debug('%s is not promisifiable', type);
     return thing;
   }
 
+  // cache thing to avoid lookup cycles
+  cache.add(thing);
+
   if (type == 'function') {
-    thing = promisifyFunction(thing, memo);
+    thing = promisifyFunction(thing, cache, path);
   } else {
     Object.keys(thing).map(function(key) {
       return [ key, thing[key] ];
@@ -49,7 +55,7 @@ function promisify(thing, memo) {
 
       if (type == 'object') {
         debug('recursing for member object property');
-        promisify(val, memo);
+        promisify(val, cache, path + '$' + key);
         return false;
       }
 
@@ -60,12 +66,10 @@ function promisify(thing, memo) {
       let key = prop[0],
           val = prop[1];
 
-      thing[key] = promisifyFunction(val, memo);
+      thing[key] = promisifyFunction(val, cache, path);
     });
   }
 
-  // memoize the promisified object and return it
-  memo.add(thing);
   return thing;
 }
 
@@ -77,22 +81,26 @@ function promisify(thing, memo) {
  * 3. Finally, promisify the function itself
  *
  * @param fn
- * @param memo
+ * @param cache
  * @returns {*}
  */
-function promisifyFunction(fn, memo) {
+function promisifyFunction(fn, cache, path) {
   debug('analyzing function ', fn);
 
   // recursively process and promisify the function's properties, including inherited ones
   Object.keys(fn).forEach(function(key) {
     debug('processing %s', key);
-    fn[key] = promisify(fn[key], memo);
+    //if (fn[key].prototype != fn && fn[key].prototype != fn.prototype) {
+    //if (Object.getPrototypeOf(fn[key]) != fn) {
+    if (fn[key]) {
+      fn[key] = promisify(fn[key], cache, path + '%' + key);
+    }
   });
 
   // process the function's prototype and attach to the promisified version
   if (fn.prototype) {
     debug('processing prototype');
-    promisify(fn.prototype, memo);
+    promisify(fn.prototype, cache, path + '#');
   }
 
   // promisify the function

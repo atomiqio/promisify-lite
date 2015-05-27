@@ -1,6 +1,8 @@
 "use strict"
 
 const assert = require('assert');
+const path = require('path');
+const util = require('util');
 const debug = require('debug')('promisify:test');
 const promisify = require('..');
 
@@ -39,6 +41,58 @@ describe('promisify function tests', function () {
 
   });
 
+});
+
+describe('promisify simple object tests', function () {
+
+  it('should promisify all member functions', function (done) {
+
+    let A = {
+      asyncFunc: function (callback) {
+        setImmediate(function () {
+          callback(null, true);
+        });
+      }
+    };
+
+    promisify(A);
+
+    A.asyncFunc()
+        .then(function (result) {
+          assert.equal(result, true);
+          done();
+        })
+        .catch(function (err) {
+          done(err);
+        });
+  });
+
+  it('should promisify all member functions in prototype chain', function (done) {
+
+    let A = function() {};
+
+    A.prototype.asyncFunc = function (callback) {
+      setImmediate(function () {
+        callback(null, true);
+      });
+    };
+
+    let B = function() {};
+    util.inherits(B, A);
+
+    promisify(B);
+
+    let b = new B();
+
+    b.asyncFunc()
+        .then(function (result) {
+          assert.equal(result, true);
+          done();
+        })
+        .catch(function (err) {
+          done(err);
+        });
+  });
 });
 
 describe('module tests', function () {
@@ -84,7 +138,7 @@ describe('module tests', function () {
 
 });
 
-describe('prototypes', function () {
+describe('inheritance', function () {
 
   it('should say woof with normal callback', function (done) {
 
@@ -110,6 +164,26 @@ describe('prototypes', function () {
     }).catch(function (err) {
       done(err);
     });
+
+  });
+
+});
+
+describe('fs', function () {
+
+  it('should read a file', function (done) {
+
+    const fs = promisify(require('fs'));
+    let f = path.join(__dirname, './samples/hello.txt');
+
+    fs.readFile(f, 'utf8')
+        .then(data => {
+          assert.equal(data, 'hello');
+          done();
+        })
+        .catch(err => {
+          done(err);
+        });
 
   });
 
