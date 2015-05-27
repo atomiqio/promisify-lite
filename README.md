@@ -8,13 +8,18 @@ Convert idiomatic async functions that expect callbacks to EcmaScript 2015 promi
 `promisify-iojs` is a very lightweight implementation that wraps callback-style async
 functions with native io.js promises.
 
-Call `promisify` with an object or function and it will over all member properites
+Promisify an object or function and it will over all member properites
 and up prototype chains to ensure all callback-style async functions are converted
 to promises. The easiest thing is to just promisify modules when loading them. 
+
+`promisify-iojs` looks for functions that have one of the following names as the last
+parameter: `callback`, `cb`, `done`, `callback_`, `cb_`. It recognizes both standard
+functional declarations as well as ES6 fat arrow functions.
 
 ## Example: promisify a loaded module
 
 ```js
+    const promisify = require('promisify-iojs');
 
     const fs = promisify(require('fs'));
     
