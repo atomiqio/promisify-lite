@@ -1,6 +1,8 @@
 promisify-iojs
 ==============
 
+[![npm version](https://badge.fury.io/js/promisify-iojs.svg)](http://badge.fury.io/js/promisify-iojs)
+
 Convert idiomatic async functions that expect callbacks to EcmaScript 2015 promises.
 
 `promisify-iojs` is a very lightweight implementation that wraps callback-style async
