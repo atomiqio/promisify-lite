@@ -1,0 +1,39 @@
+{
+  "name": "promisify-iojs",
+  "version": "0.0.1",
+  "description": "Convert callback-based functions to use io.js promises",
+  "engines": {
+    "node": "^2.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -- --harmony_arrow_functions",
+    "debug": "DEBUG=*,-mocha:* mocha -- --harmony_arrow_functions"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atomiqio/promisify-iojs.git"
+  },
+  "keywords": [
+    "promise",
+    "promisify",
+    "callback",
+    "iojs",
+    "es6",
+    "ecmascript"
+  ],
+  "author": "Tony Pujals <tony@subfuzion.com> (http://twitter.com/subfuzion)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/atomiqio/promisify-iojs/issues"
+  },
+  "homepage": "https://github.com/atomiqio/promisify-iojs#readme",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "denodeify": "^1.2.1"
+  },
+  "devDependencies": {
+    "lodash": "^3.9.3",
+    "mocha": "^2.2.5"
+  }
+}
