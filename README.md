@@ -1,7 +1,10 @@
 @atomiq/promisify
 =================
 
-[![npm version](https://badge.fury.io/js/@atomiq/promisify.svg)](http://badge.fury.io/js/@atomiq/promisify)
+[npm package](https://www.npmjs.com/package/@atomiq/promisify)
+
+    npm install @atomiq/promisify
+
 
 Convert idiomatic async functions that expect callbacks to EcmaScript 2015 promises.
 
