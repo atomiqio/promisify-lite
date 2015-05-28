@@ -1,5 +1,5 @@
 {
-  "name": "promisify-iojs",
+  "name": "@atomiq/promisify",
   "version": "0.0.1",
   "description": "Convert callback-based functions to use io.js promises",
   "engines": {

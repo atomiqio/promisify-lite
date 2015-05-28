@@ -1,5 +1,5 @@
-promisify-iojs
-==============
+@atomiq/promisify
+=================
 
 [![npm version](https://badge.fury.io/js/promisify-iojs.svg)](http://badge.fury.io/js/promisify-iojs)
 
@@ -8,7 +8,7 @@ Convert idiomatic async functions that expect callbacks to EcmaScript 2015 promi
 `promisify-iojs` is a very lightweight implementation that wraps callback-style async
 functions with native io.js promises.
 
-Promisify an object or function and it will over all member properites
+Promisify an object or function and it will walk over all member properites
 and up prototype chains to ensure all callback-style async functions are converted
 to promises. The easiest thing is to just promisify modules when loading them. 
 
@@ -16,10 +16,16 @@ to promises. The easiest thing is to just promisify modules when loading them.
 parameter: `callback`, `cb`, `done`, `callback_`, `cb_`. It recognizes both standard
 functional declarations as well as ES6 fat arrow functions.
 
+Under the hood, @atomiq/promisify uses [denodeify](https://www.npmjs.com/package/denodeify)
+to create the promise wrapper over individual async functions. 
+
+This package uses the new scoped package support available with `npm` versions greater than 2.7.0.
+If you're not familiar with using scoped packages, see [this page](https://docs.npmjs.com/getting-started/scoped-packages).
+
 ## Example: promisify a loaded module
 
 ```js
-    const promisify = require('promisify-iojs');
+    const promisify = require('@atomiq/promisify');
 
     const fs = promisify(require('fs'));
     
