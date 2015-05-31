@@ -87,6 +87,13 @@ callback style shown below:
     });
 ```
 
+### More examples
+
+See tests for more examples.
+
+    npm test
+
+
 ## A bit more information
 
 For trivial examples, promises might not seem to offer much of a difference over
@@ -128,8 +135,4 @@ Promise version
       // handle error
     });
 ```
-
-
-
-
 
