@@ -1,59 +1,40 @@
-@atomiq/promisify
-=================
+promisify-lite
+==============
 
-[npm package](https://www.npmjs.com/package/@atomiq/promisify)
+[npm package](https://www.npmjs.com/package/promisify-lite)
 
-    npm install @atomiq/promisify
-
+    npm install promisify-lite
 
 Convert idiomatic async functions that expect callbacks to EcmaScript 2015 promises.
 
-`promisify-iojs` is a very lightweight implementation that wraps callback-style async
-functions with native io.js promises.
+`promisify-lite` is a very lightweight implementation that wraps callback-style async
+functions with native promises. It does not polyfill promises, but instead relies
+on the native support with the versions of Node.js that have it.
 
 Promisify an object or function and it will walk over all member properites
 and up prototype chains to ensure all callback-style async functions are converted
-to promises. The easiest thing is to just promisify modules when loading them. 
+to promises. The easiest thing is to just promisify modules when loading them.
 
-`promisify-iojs` looks for functions that have one of the following names as the last
-parameter: `callback`, `cb`, `done`, `callback_`, `cb_`. It recognizes both standard
-functional declarations as well as ES6 fat arrow functions.
+`promisify` looks for idiomatic asynchronous functions -- functions that have one of
+the following names as the last parameter: `callback`, `cb`, `done`, `callback_`, `cb_`
+-- and promisifies them (creates a promise wrapper around the function).
+It recognizes both standard functional declarations as well as ES6 fat arrow functions.
 
-Under the hood, @atomiq/promisify uses [denodeify](https://www.npmjs.com/package/denodeify)
-to create the promise wrapper over individual async functions. 
+Under the hood, `promisify` uses [denodeify](https://www.npmjs.com/package/denodeify)
+to create the promise wrapper over individual async functions.
 
-This package uses the new scoped package support available with `npm` versions greater than 2.7.0.
-If you're not familiar with using scoped packages, see [this page](https://docs.npmjs.com/getting-started/scoped-packages).
+## Example: promisify a `require`ed module
 
-## Example: promisify a loaded module
+In this example, we promisify the core module `fs`.
+
+Normally, when using async functions, such as `fs.readFile`, you need to
+supply a callback, such as in this example:
 
 ```js
-    const promisify = require('@atomiq/promisify');
+    const fs = require('fs');
 
-    const fs = promisify(require('fs'));
-    
     let f = require('path').join(__dirname, './file.txt');
-    
-    fs.readFile(f, 'utf8')
-        .then(data => {
-          // do something with data
-        })
-        .catch(err => {
-          // handle error
-        });
 
-  });
-
-```
-
-By promisifying `fs`, you can use the above style instead of the typical
-callback style shown below:
-
-```js
-    var fs = require('fs');
-    
-    var f = require('path').join(__dirname, './file.txt');
-    
     fs.readFile(f, 'utf8', function(err, data) {
       if (err) {
         // handle error
@@ -63,11 +44,30 @@ callback style shown below:
     }
 ```
 
+By promisifying `fs`, you can dispense with the callback as shown in this example:
+
+```js
+    const promisify = require('promisify-lite');
+    const fs = promisify(require('fs'));
+
+    let f = require('path').join(__dirname, './file.txt');
+
+    fs.readFile(f, 'utf8')
+        .then(data => {
+          // do something with data
+        })
+        .catch(err => {
+          // handle error
+        });
+  });
+
+```
+
 ## Example: promisify a specific function
 
 ```js
 
-    var asyncFunc = function(callback) {
+    let asyncFunc = function(callback) {
       // call back with result asynchronously
       setImmediate(() => callback(null, true));
     }
@@ -135,4 +135,3 @@ Promise version
       // handle error
     });
 ```
-

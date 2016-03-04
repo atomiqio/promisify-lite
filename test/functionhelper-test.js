@@ -155,4 +155,3 @@ describe('async function recognition tests', function () {
   });
 
 });
-

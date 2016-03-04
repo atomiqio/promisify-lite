@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 module.exports = promisify;
 
@@ -119,4 +119,3 @@ function promisifyFunction(fn, cache, path) {
 
   return fn;
 }
-

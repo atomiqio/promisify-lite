@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const util = require('util');
 const debug = require('debug')('prototypes');
@@ -22,5 +22,3 @@ function Dog() {
 util.inherits(Dog, Animal);
 
 module.exports = Dog;
-
-

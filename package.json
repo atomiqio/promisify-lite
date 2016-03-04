@@ -1,14 +1,15 @@
 {
-  "name": "@atomiq/promisify",
-  "version": "0.0.3",
+  "name": "promisify-lite",
+  "version": "0.0.4",
   "description": "Convert callback-based functions to use io.js promises",
   "engines": {
-    "node": "^2.0.0"
+    "node": ">=4.0.0"
   },
   "main": "index.js",
   "scripts": {
-    "test": "mocha -- --harmony_arrow_functions",
-    "debug": "DEBUG=*,-mocha:* mocha -- --harmony_arrow_functions"
+    "test": "mocha",
+    "debug": "DEBUG=*,-mocha:* mocha",
+    "eslint": "eslint ."
   },
   "repository": {
     "type": "git",
@@ -22,18 +23,20 @@
     "es6",
     "ecmascript"
   ],
-  "author": "Tony Pujals <tony@subfuzion.com> (http://twitter.com/subfuzion)",
+  "author": "Tony Pujals (http://twitter.com/subfuzion)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/atomiqio/promisify-iojs/issues"
+    "url": "https://github.com/atomiqio/promisify-lite/issues"
   },
-  "homepage": "https://github.com/atomiqio/promisify-iojs#readme",
+  "homepage": "https://github.com/atomiqio/promisify-lite#readme",
   "dependencies": {
     "debug": "^2.2.0",
     "denodeify": "^1.2.1"
   },
   "devDependencies": {
-    "lodash": "^3.9.3",
-    "mocha": "^2.2.5"
+    "babel-eslint": "^5.0.0",
+    "eslint": "^2.2.0",
+    "lodash": "^4.6.1",
+    "mocha": "^2.4.5"
   }
 }
