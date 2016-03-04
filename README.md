@@ -9,6 +9,15 @@ promisify-lite
 
 Convert idiomatic async functions that expect callbacks to EcmaScript 2015 promises.
 
+## Why promisify-lite?
+
+`promisify-lite` is a very lightweight package that only does one thing: wrap standard
+Node callback-style functions with promises. It can wrap individual functions and
+entire modules when you `require` them. `promisify-lite` is not a promise implementation;
+it requires that you use a version of Node that supports promises. It was originally
+written as a helper for `iojs` when it was released with promise support, but is now
+supported for Node v4 and later.
+
 ## Quick Overview
 
 When you "promisify" a function that expects a callback, you create a wrapper around it.
@@ -22,9 +31,11 @@ an error. Using `fs.readFile` normally looks like this:
       console.log(data);
     });
 
-If we want to work with promises in our code, we will need to promisify the function by
-createing a wrapper around it.
+If we want to work with promises in our code, we will need to promisify `fs.readFile` by
+creating a wrapper around it. Depending on whether readFile invokes our callback with an
+error or data, we will need to reject or resolve the promise accordingly.
 
+    // create a promise that wraps fs.readFile
     var readFile = new Promise((resolve, reject) => {
       fs.readFile('/etc/passwd', (err, data) => {
         if (err) return reject(err);
@@ -32,7 +43,7 @@ createing a wrapper around it.
       });  
     });
 
-Now we can use the promise like this:
+Now we can use our promise version of the `readFile` function like this:
 
     readFile('/etc/passwd')
       .then(data => {
@@ -42,8 +53,10 @@ Now we can use the promise like this:
         console.error(err);
       });
 
-`promisify-lite` takes care of the wrapping async functions so you don't have to. It can
-wrap functions and entire objects (such as modules) recursively.
+`promisify-lite` takes care of wrapping async functions so you don't have to. It can
+wrap functions and entire objects (including modules) recursively. This makes it easy
+to use promises while working with Node core modules and other packages that expect
+standard callbacks.
 
 ## Details
 
