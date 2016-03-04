@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=4.0.0"
   },
-  "main": "index.js",
+  "main": "lib/promisify.js",
   "scripts": {
     "test": "mocha",
     "debug": "DEBUG=*,-mocha:* mocha",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atomiqio/promisify-iojs.git"
+    "url": "git+https://github.com/atomiqio/promisify-lite.git"
   },
   "keywords": [
     "promise",
@@ -24,7 +24,7 @@
     "ecmascript"
   ],
   "author": "Tony Pujals (http://twitter.com/subfuzion)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/atomiqio/promisify-lite/issues"
   },
