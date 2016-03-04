@@ -1,6 +1,8 @@
 promisify-lite
 ==============
 
+*Note: this package has been renamed from `promisify-iojs`.*
+
 [npm package](https://www.npmjs.com/package/promisify-lite)
 
     npm install promisify-lite
