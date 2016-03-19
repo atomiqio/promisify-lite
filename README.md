@@ -75,7 +75,7 @@ It recognizes both standard functional declarations as well as ES6 fat arrow fun
 Under the hood, `promisify-lite` uses [denodeify](https://www.npmjs.com/package/denodeify)
 to create the promise wrapper over individual async functions.
 
-## Example: promisify a `require`ed module
+## Example: promisify a `require`d module
 
 In this example, we promisify the core module `fs`.
 
