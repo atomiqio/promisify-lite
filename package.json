@@ -1,6 +1,6 @@
 {
   "name": "promisify-lite",
-  "version": "0.0.9",
+  "version": "1.0.0",
   "description": "Convert callback-based functions to use io.js promises",
   "engines": {
     "node": ">=4.0.0"
