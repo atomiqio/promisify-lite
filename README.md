@@ -73,11 +73,11 @@ the following names as the last parameter: `callback`, `cb`, `done`, `callback_`
 It recognizes both standard functional declarations as well as ES6 fat arrow functions.
 
 When `promisify-lite` finds a function to wrap after inspecting an object,
-it creates a new key on the object appending 'Ps' to the wrapped function's
+it creates a new key on the object appending 'Async' to the wrapped function's
 name. Example:
 
     original function   ->   promisified function
-    fs.readFile              fs.readFilePx
+    fs.readFile              fs.readFileAsync
 
 Under the hood, `promisify-lite` uses [denodeify](https://www.npmjs.com/package/denodeify)
 to create the promise wrapper over individual async functions.
@@ -113,7 +113,7 @@ demonstrated in this example:
     let f = require('path').join(__dirname, './file.txt');
 
     // NOTE: readFile has been promisified!
-    fs.readFilePx(f, 'utf8')
+    fs.readFileAsync(f, 'utf8')
         .then(data => {
           // do something with data
         })

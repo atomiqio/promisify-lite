@@ -57,7 +57,7 @@ describe('promisify simple object tests', function() {
 
     promisify(A);
 
-    A.asyncFuncPx()
+    A.asyncFuncAsync()
       .then(function(result) {
         assert.equal(result, true);
         done();
@@ -84,7 +84,7 @@ describe('promisify simple object tests', function() {
 
     let b = new B();
 
-    b.asyncFuncPx()
+    b.asyncFuncAsync()
       .then(function(result) {
         assert.equal(result, true);
         done();
@@ -126,8 +126,8 @@ describe('module tests', function() {
 
     let simple = promisify(require('./samples/simple-exports'));
 
-    simple.fooPx(true).then(() => {
-      return simple.fooPx(false);
+    simple.fooAsync(true).then(() => {
+      return simple.fooAsync(false);
     }).then(() => {
       done(new Error('should not have succeeded'));
     }).catch(err => {
@@ -158,7 +158,7 @@ describe('inheritance', function() {
     const Dog = promisify(require('./samples/prototypes'));
     let dog = new Dog();
 
-    dog.speakPx().then(function(result) {
+    dog.speakAsync().then(function(result) {
       assert.equal(result, 'woof');
       done();
     }).catch(function(err) {
@@ -176,7 +176,7 @@ describe('fs', function() {
     const fs = promisify(require('fs'));
     let f = path.join(__dirname, './samples/hello.txt');
 
-    fs.readFilePx(f, 'utf8')
+    fs.readFileAsync(f, 'utf8')
       .then(data => {
         assert.equal(data, 'hello');
         done();
