@@ -1,4 +1,4 @@
-# promisify-lite [![NPM version][npm-image]][npm-url]
+# promisify-lite [![npm badge][npm-image]][npm-url]
 
 *Note: this package has been renamed from `promisify-iojs`.*
 
