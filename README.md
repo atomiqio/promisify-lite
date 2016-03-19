@@ -1,5 +1,4 @@
-promisify-lite
-==============
+# promisify-lite [![NPM version][npm-image]][npm-url]
 
 *Note: this package has been renamed from `promisify-iojs`.*
 
@@ -189,3 +188,7 @@ Promise version
       // handle error
     });
 ```
+
+
+[npm-image]: https://badge.fury.io/js/promisify-lite.svg
+[npm-url]: https://npmjs.org/package/promisify-lite
