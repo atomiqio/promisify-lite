@@ -6,9 +6,9 @@ const util = require('util');
 const debug = require('debug')('promisify:test');
 const promisify = require('..');
 
-describe('promisify function tests', function () {
+describe('promisify function tests', function() {
 
-  it('should promisify simple function', function (done) {
+  it('should promisify simple function', function(done) {
     let asyncFunc = callback => {
       setImmediate(() => callback(null, true));
     };
@@ -26,7 +26,7 @@ describe('promisify function tests', function () {
 
   });
 
-  it('should catch promisified function error', function (done) {
+  it('should catch promisified function error', function(done) {
     let asyncFunc = callback => {
       setImmediate(() => callback(new Error()));
     };
@@ -43,13 +43,13 @@ describe('promisify function tests', function () {
 
 });
 
-describe('promisify simple object tests', function () {
+describe('promisify simple object tests', function() {
 
-  it('should promisify all member functions', function (done) {
+  it('should promisify all member functions', function(done) {
 
     let A = {
-      asyncFunc: function (callback) {
-        setImmediate(function () {
+      asyncFunc: function(callback) {
+        setImmediate(function() {
           callback(null, true);
         });
       }
@@ -57,22 +57,22 @@ describe('promisify simple object tests', function () {
 
     promisify(A);
 
-    A.asyncFunc()
-        .then(function (result) {
-          assert.equal(result, true);
-          done();
-        })
-        .catch(function (err) {
-          done(err);
-        });
+    A.asyncFuncPx()
+      .then(function(result) {
+        assert.equal(result, true);
+        done();
+      })
+      .catch(function(err) {
+        done(err);
+      });
   });
 
-  it('should promisify all member functions in prototype chain', function (done) {
+  it('should promisify all member functions in prototype chain', function(done) {
 
     let A = function() {};
 
-    A.prototype.asyncFunc = function (callback) {
-      setImmediate(function () {
+    A.prototype.asyncFunc = function(callback) {
+      setImmediate(function() {
         callback(null, true);
       });
     };
@@ -84,20 +84,20 @@ describe('promisify simple object tests', function () {
 
     let b = new B();
 
-    b.asyncFunc()
-        .then(function (result) {
-          assert.equal(result, true);
-          done();
-        })
-        .catch(function (err) {
-          done(err);
-        });
+    b.asyncFuncPx()
+      .then(function(result) {
+        assert.equal(result, true);
+        done();
+      })
+      .catch(function(err) {
+        done(err);
+      });
   });
 });
 
-describe('module tests', function () {
+describe('module tests', function() {
 
-  it('should promisify simple module', function (done) {
+  it('should promisify simple module', function(done) {
 
     let simple = promisify(require('./samples/simple'));
 
@@ -110,7 +110,7 @@ describe('module tests', function () {
 
   });
 
-  it('simple should fail', function (done) {
+  it('simple should fail', function(done) {
 
     let simple = promisify(require('./samples/simple'));
 
@@ -122,12 +122,12 @@ describe('module tests', function () {
 
   });
 
-  it('should promisify simple-exports module and chain results', function (done) {
+  it('should promisify simple-exports module and chain results', function(done) {
 
     let simple = promisify(require('./samples/simple-exports'));
 
-    simple.foo(true).then(() => {
-      return simple.foo(false);
+    simple.fooPx(true).then(() => {
+      return simple.fooPx(false);
     }).then(() => {
       done(new Error('should not have succeeded'));
     }).catch(err => {
@@ -138,9 +138,9 @@ describe('module tests', function () {
 
 });
 
-describe('inheritance', function () {
+describe('inheritance', function() {
 
-  it('should say woof with normal callback', function (done) {
+  it('should say woof with normal callback', function(done) {
 
     const Dog = require('./samples/prototypes');
     let dog = new Dog();
@@ -153,15 +153,15 @@ describe('inheritance', function () {
 
   });
 
-  it('should say woof', function (done) {
+  it('should say woof', function(done) {
 
     const Dog = promisify(require('./samples/prototypes'));
     let dog = new Dog();
 
-    dog.speak().then(function (result) {
+    dog.speakPx().then(function(result) {
       assert.equal(result, 'woof');
       done();
-    }).catch(function (err) {
+    }).catch(function(err) {
       done(err);
     });
 
@@ -169,21 +169,21 @@ describe('inheritance', function () {
 
 });
 
-describe('fs', function () {
+describe('fs', function() {
 
-  it('should read a file', function (done) {
+  it('should read a file', function(done) {
 
     const fs = promisify(require('fs'));
     let f = path.join(__dirname, './samples/hello.txt');
 
-    fs.readFile(f, 'utf8')
-        .then(data => {
-          assert.equal(data, 'hello');
-          done();
-        })
-        .catch(err => {
-          done(err);
-        });
+    fs.readFilePx(f, 'utf8')
+      .then(data => {
+        assert.equal(data, 'hello');
+        done();
+      })
+      .catch(err => {
+        done(err);
+      });
 
   });
 
