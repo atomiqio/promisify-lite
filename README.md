@@ -1,5 +1,7 @@
 # promisify-lite [![npm badge][npm-image]][npm-url]
 
+[![Join the chat at https://gitter.im/atomiqio/promisify-lite](https://badges.gitter.im/atomiqio/promisify-lite.svg)](https://gitter.im/atomiqio/promisify-lite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 *Note: this package has been renamed from `promisify-iojs`.*
 
 [npm package](https://www.npmjs.com/package/promisify-lite)
